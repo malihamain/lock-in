@@ -2,28 +2,37 @@
 
 import DateSection from "../components/DateSection"
 import TasksSection from "../components/TasksSection"
-import Footer from "../components/Footer"
-import { useState, useEffect } from "react";
-import { startOfWeek, addDays, format } from "date-fns";
+
+import { useState } from "react";
+import { startOfWeek, addDays, isSameDay } from "date-fns";
 
 export default function Home() {
-  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-  const dates = [1, 2, 3, 4, 5, 6, 7];
-  const today = 2
-
-  const tasks = ["stretchs", "breakkie", "workout", "coding", "svenska"]
-
+  const tasks = [
+  { id: 1, title: "stretchs", done: false },
+  { id: 2, title: "breakkie", done: false },
+  { id: 3, title: "workout", done: false },
+  { id: 4, title: "coding", done: false },
+  { id: 5, title: "svenska", done: false },
+];
+  const today =new Date()
   const [selectedDate, setSelectedDate] = useState(today)
+
+  const readOnly = !isSameDay(today, selectedDate)
+
+  const startDate = startOfWeek(new Date(), { weekStartsOn: 0 });
+
+  const weekDates = Array.from({ length: 7 }, (_, i) =>
+    addDays(startDate, i)
+  );
+
 
 
 
   return (
     <div className="my-5">
       <DateSection selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate} days={days} dates={dates} />
-      <TasksSection tasks={tasks} />
-      <Footer/>
- 
+        setSelectedDate={setSelectedDate} weekDates={weekDates} />
+      <TasksSection tasks={tasks} readOnly={readOnly} />
     </div>
   );
 }
