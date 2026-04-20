@@ -15,12 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={libre.variable}>
-      <body className="min-h-screen flex items-center justify-center bg-white">
-        <div className="w-full max-w-sm min-h-screen bg-white flex flex-col">
+      <body className="min-h-screen bg-white">
+        <div className="mx-auto w-full max-w-sm min-h-screen bg-white flex flex-col">
 
           <Header />
 
-          <div className="">
+          <div className="flex-1">
             {children}
           </div>
           <Footer />

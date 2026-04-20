@@ -7,14 +7,14 @@ import { useState } from "react";
 import { startOfWeek, addDays, isSameDay } from "date-fns";
 
 export default function Home() {
-  const tasks = [
-  { id: 1, title: "stretchs", done: false },
-  { id: 2, title: "breakkie", done: false },
-  { id: 3, title: "workout", done: false },
-  { id: 4, title: "coding", done: false },
-  { id: 5, title: "svenska", done: false },
-];
-  const today =new Date()
+  const [tasks, setTasks] = useState([
+    { id: 1, title: "stretchs", done: false },
+    { id: 2, title: "breakkie", done: false },
+    { id: 3, title: "workout", done: false },
+    { id: 4, title: "coding", done: false },
+    { id: 5, title: "svenska", done: false },
+  ]);
+  const today = new Date()
   const [selectedDate, setSelectedDate] = useState(today)
 
   const readOnly = !isSameDay(today, selectedDate)
@@ -32,7 +32,11 @@ export default function Home() {
     <div className="my-5">
       <DateSection selectedDate={selectedDate}
         setSelectedDate={setSelectedDate} weekDates={weekDates} />
-      <TasksSection tasks={tasks} readOnly={readOnly} />
+      <TasksSection
+        tasks={tasks}
+        setTasks={setTasks}
+        readOnly={readOnly}
+      />
     </div>
   );
 }
