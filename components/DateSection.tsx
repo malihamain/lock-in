@@ -1,60 +1,71 @@
 
+import { format, isSameDay } from "date-fns";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+
+
 type Props = {
-    selectedDate: number;
-    days: string[]
-    dates: number[]
-    setSelectedDate: (date: number) => void;
+    selectedDate: Date;
+    weekDates: Date[]
+    setSelectedDate: (date: Date) => void;
 };
+
+
 export default function DateSection({
     selectedDate,
     setSelectedDate,
-    days,
-    dates,
+    weekDates,
+
 }: Props) {
 
     const changeDate = (date) => {
         setSelectedDate(date)
-
     }
 
 
     return (
-        <div className="my-2">
-            <div className="flex flex-col">
+        <div className="my-2 flex w-full justify-between">
+            <button
+                // onClick={() => setCurrentDate(addDays(currentDate, -7))}
+                className="text-accent-2 text-xl hover:scale-110 transition"
+            >
+                <FiChevronLeft />
+            </button>
+
+            <div className="flex">
 
                 {/* days row */}
                 <div className="flex w-full">
-                    {days.map((day, index) => (
-                        <div key={index} className="flex-1 text-center">
-                            {day}
+                    {weekDates.map((d, i) => (
+                        <div key={i} className="mx-1 text-center" >
+                        <div >
+                            {format(d, "EEE").toUpperCase()}
                         </div>
-                    ))}
-                </div>
-
-                {/* dates row */}
-                <div className="flex w-full mt-2">
-                    {dates.map((date, index) => {
-
-                        return (
-                            <div key={index} className="flex-1 flex justify-center">
+                         <div key={i} className="flex justify-center">
                                 <div
                                     className={` cursor-pointer
                     w-10 h-10 rounded-full flex items-center justify-center
-                    ${date === selectedDate
+                    ${isSameDay(d, selectedDate)
                                             ? "bg-accent-1 text-black"
                                             : "border border-accent-2 text-black"}
                   `
                                     }
-                                    onClick={() => changeDate(date)}
+                                    onClick={() => changeDate(d)}
                                 >
-                                    {date}
+                                    {format(d, "d")}
                                 </div>
                             </div>
-                        );
-                    })}
+                        </div>
+                    ))}
                 </div>
+             
 
             </div>
+              <button
+                // onClick={() => setCurrentDate(addDays(currentDate, -7))}
+                className="text-accent-2 text-xl hover:scale-110 transition"
+            >
+                <FiChevronRight />
+            </button>
         </div>
     );
 }
